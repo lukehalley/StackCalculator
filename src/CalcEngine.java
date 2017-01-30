@@ -26,7 +26,6 @@ public class CalcEngine {
 	public void charPressed(String c) {
 
 		expr += c;
-
 	}
 
 	/**
@@ -34,9 +33,10 @@ public class CalcEngine {
 	 */
 	public void equals() {
 		
-		System.out.println();
+		String postfix = CalcConvert.convertToPostfix(expr);
+		String answer = CalcConvert.evaluatePostfix(postfix);
 		
-		String answer = CalcConvert.convertToPostfix(expr);
+		System.out.println(answer);
 		
 	}
 
@@ -52,7 +52,7 @@ public class CalcEngine {
 	 * Return the title of this calculation engine.
 	 */
 	public String getTitle() {
-		return ("My Calculator");
+		return ("Lukes Calculator");
 	}
 
 	/**
@@ -60,7 +60,7 @@ public class CalcEngine {
 	 * it should say something like "Written by H. Simpson".
 	 */
 	public String getAuthor() {
-		return ("Joe Daly");
+		return ("Luke Halley");
 	}
 
 	/**
@@ -68,7 +68,7 @@ public class CalcEngine {
 	 * is, so it should say something like "Version 1.1".
 	 */
 	public String getVersion() {
-		return ("Ver. 1.0");
+		return ("Ver. 1.1");
 	}
 
 }

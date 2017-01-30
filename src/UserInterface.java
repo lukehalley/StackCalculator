@@ -3,14 +3,6 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.*;
 
-/**
- * A graphical user interface for the calculator. No calculation is being
- * done here. This class is responsible just for putting up the display on 
- * screen. It then refers to the "CalcEngine" to do all the real work.
- * 
- * @author Michael Kolling
- * @version 31 July 2000
- */
 public class UserInterface
 	implements ActionListener
 {
@@ -121,6 +113,7 @@ public class UserInterface
 	 * Toggle the info display in the calculator's status area between the
 	 * author and version information.
 	 */
+	@SuppressWarnings("unused")
 	private void showInfo()
 	{
 		if(showingAuthor)

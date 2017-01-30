@@ -3,31 +3,34 @@ import java.util.Stack;
 public class CalcConvert {
 
 	public static String convertToPostfix(String infix) {
-		Stack<String> st = new Stack<String>();
+		Stack<String> postfixStack = new Stack<String>();
 		String postfix = "";
 
+		// Found On Stack Overflow:
+		// http://stackoverflow.com/questions/21408570/tokenizing-an-infix-string-in-java
 		String[] tokens = infix.split("(?<=[^\\.a-zA-Z\\d])|(?=[^\\.a-zA-Z\\d])");
+
 		for (String token : tokens) {
 			switch (token) {
 			case "+":
 			case "-":
 			case "/":
 			case "*":
-				if (st.empty()) {
-					st.push(token);
+				if (postfixStack.empty()) {
+					postfixStack.push(token);
 				} else {
-					while (!st.empty() && precendance(token) >= precendance(st.peek())) {
-						postfix += st.pop();
+					while (!postfixStack.empty() && precendance(token) >= precendance(postfixStack.peek())) {
+						postfix += postfixStack.pop();
 					}
-					st.push(token);
-				} break;
+					postfixStack.push(token);
+				}
+				break;
 			default:
 				postfix += token;
 			}
-
 		}
-		while (!st.empty()) {
-			postfix += st.pop();
+		while (!postfixStack.empty()) {
+			postfix += postfixStack.pop();
 		}
 		return postfix;
 	}
@@ -46,56 +49,43 @@ public class CalcConvert {
 			throw new IllegalArgumentException("Operator unknown: " + op);
 		}
 	}
-}
 
-//
-// Algorithm convertToPostfix (infix)
-// // Converts an infix expression to an equivalent postfix expression.
-// operatorStack = a new empty stack
-// postfix = a new empty string
-// while (infix has characters left to parse)
-// {
-// nextCharacter = next nonblank character of infix
-// switch (nextCharacter)
-// {
-// case variable:
-// Append nextCharacter to postfix
-// break
-// case '^':
-// operatorStack.push (nextCharacter)
-// break
-// case '+':
-// case '-':
-// case '*':
-// case '/':
-// while (!operatorStack.isEmpty () and
-// precedence of nextCharacter <= precedence of operatorStack.peek ())
-// {
-// Append operatorStack.peek () to postfix
-// operatorStack.pop ()
-// }
-// operatorStack.push (nextCharacter)
-// break
-// case '( ':
-// operatorStack.push (nextCharacter)
-// break
-// case ')': // stack is not empty if infix expression is valid
-// topOperator = operatorStack.pop ()
-// while (topOperator != '(')
-// {
-// Append topOperator to postfix
-// topOperator = operatorStack.pop ()
-// }
-// break
-// default:
-// break
-// }
-// }
-// while (!operatorStack.isEmpty ())
-// {
-// topOperator = operatorStack.pop ()
-// Append topOperator to postfix
-// }
-// return postfix
-//
-// }
+	public static String evaluatePostfix(String infix) {
+		Stack<String> evaluateStack = new Stack<String>();
+
+		String[] tokens = infix.split("(?<=[^\\.a-zA-Z\\d])|(?=[^\\.a-zA-Z\\d])");
+
+		for (String token : tokens) {
+			switch (token) {
+			case "+":
+				String plusOne = evaluateStack.pop();
+				String plusTwo = evaluateStack.pop();
+				double plusAnswer = Double.parseDouble(plusOne) + Double.parseDouble(plusTwo);
+				evaluateStack.push(Double.toString(plusAnswer));
+			case "-":
+				String minusOne = evaluateStack.pop();
+				String minusTwo = evaluateStack.pop();
+				double minusAnswer = Double.parseDouble(minusOne) - Double.parseDouble(minusTwo);
+				evaluateStack.push(Double.toString(minusAnswer));
+			case "/":
+				String divideOne = evaluateStack.pop();
+				String divideTwo = evaluateStack.pop();
+				double divideAnswer = Double.parseDouble(divideOne) / Double.parseDouble(divideTwo);
+				evaluateStack.push(Double.toString(divideAnswer));
+			case "*":
+				String multiplyOne = evaluateStack.pop();
+				String multiplyTwo = evaluateStack.pop();
+				double multiplyAnswer = Double.parseDouble(multiplyOne) / Double.parseDouble(multiplyTwo);
+				evaluateStack.push(Double.toString(multiplyAnswer));
+				break;
+			default:
+				evaluateStack.push(token);
+			}
+
+		}
+
+		return evaluateStack.pop();
+
+	}
+
+}
