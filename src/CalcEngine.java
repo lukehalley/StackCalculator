@@ -36,7 +36,7 @@ public class CalcEngine {
 		String postfix = CalcConvert.convertToPostfix(expr);
 		String answer = CalcConvert.evaluatePostfix(postfix);
 		
-		System.out.println(answer);
+		expr = answer;
 		
 	}
 
