@@ -12,6 +12,18 @@ public class CalcConvert {
 
 		for (String token : tokens) {
 			switch (token) {
+			case "(":
+				postfixStack.push(token);
+				break;
+			case ")":
+				String t = postfixStack.pop();
+
+				do {
+					postfix += t;
+					t = postfixStack.pop();
+				} while (!t.equals("("));
+				break;
+
 			case "+":
 			case "-":
 			case "/":
@@ -48,6 +60,8 @@ public class CalcConvert {
 			return 1;
 		case "^":
 			return 2;
+		case "(":
+			return -1;
 		default:
 			throw new IllegalArgumentException("Operator unknown: " + op);
 		}
