@@ -20,6 +20,7 @@ public class CalcConvert {
 
 				do {
 					postfix += t;
+					postfix += " ";
 					t = postfixStack.pop();
 				} while (!t.equals("("));
 				break;
@@ -31,7 +32,7 @@ public class CalcConvert {
 				if (postfixStack.empty()) {
 					postfixStack.push(token);
 				} else {
-					while (!postfixStack.empty() && precendance(token) >= precendance(postfixStack.peek())) {
+					while (!postfixStack.empty() && precendance(token) < precendance(postfixStack.peek())) {
 						postfix += postfixStack.pop();
 						postfix += " ";
 					}
@@ -84,19 +85,19 @@ public class CalcConvert {
 			case "-":
 				String minusOne = evaluateStack.pop();
 				String minusTwo = evaluateStack.pop();
-				double minusAnswer = Double.parseDouble(minusOne) - Double.parseDouble(minusTwo);
+				double minusAnswer = Double.parseDouble(minusTwo) - Double.parseDouble(minusOne);
 				evaluateStack.push(Double.toString(minusAnswer));
 				break;
 			case "/":
 				String divideOne = evaluateStack.pop();
 				String divideTwo = evaluateStack.pop();
-				double divideAnswer = Double.parseDouble(divideOne) / Double.parseDouble(divideTwo);
+				double divideAnswer = Double.parseDouble(divideTwo) / Double.parseDouble(divideOne);
 				evaluateStack.push(Double.toString(divideAnswer));
 				break;
 			case "*":
 				String multiplyOne = evaluateStack.pop();
 				String multiplyTwo = evaluateStack.pop();
-				double multiplyAnswer = Double.parseDouble(multiplyOne) / Double.parseDouble(multiplyTwo);
+				double multiplyAnswer = Double.parseDouble(multiplyOne) * Double.parseDouble(multiplyTwo);
 				evaluateStack.push(Double.toString(multiplyAnswer));
 				break;
 			default:
